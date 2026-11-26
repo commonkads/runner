@@ -1,6 +1,6 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from "node:fs";
 
-import { stringify as stringifyYaml } from 'yaml';
+import { stringify as stringifyYaml } from "yaml";
 
 import {
   LocalFileStore,
@@ -14,16 +14,17 @@ import {
   loadDomainManifest,
   loadTaskFromManifest,
   type LogLevel,
-} from '@commonkads/engine';
-import type { BedrockProviderOptions } from '@commonkads/provider-aws';
-import type { ClaudeProviderOptions } from '@commonkads/provider-anthropic';
-import type { GeminiProviderOptions } from '@commonkads/provider-google';
-import type { OllamaProviderOptions } from '@commonkads/provider-ollama';
-import type { OpenAIProviderOptions } from '@commonkads/provider-openai';
+} from "@commonkads/engine";
+import type { BedrockProviderOptions } from "@commonkads/provider-aws";
+import type { ClaudeProviderOptions } from "@commonkads/provider-anthropic";
+import type { GeminiProviderOptions } from "@commonkads/provider-google";
+import type { OllamaProviderOptions } from "@commonkads/provider-ollama";
+import type { OpenAIProviderOptions } from "@commonkads/provider-openai";
 
-const GROQ_BASE_URL = 'https://api.groq.com/openai/v1';
+const GROQ_BASE_URL = "https://api.groq.com/openai/v1";
 
-type CliProvider = 'bedrock' | 'claude' | 'gemini' | 'ollama' | 'openai' | 'groq';
+type CliProvider =
+  "bedrock" | "claude" | "gemini" | "ollama" | "openai" | "groq";
 
 type CliProviderOptions =
   | BedrockProviderOptions
@@ -51,46 +52,46 @@ export interface DomainRunnerOptions {
 }
 
 function toProviderOptions(options: DomainRunnerOptions): CliProviderOptions {
-  const type = options.provider ?? 'bedrock';
+  const type = options.provider ?? "bedrock";
   switch (type) {
-    case 'claude':
+    case "claude":
       return {
-        type: 'claude',
+        type: "claude",
         model: options.model,
         apiKey: options.apiKey,
         authToken: options.authToken,
         thinking: options.thinking,
       };
-    case 'gemini':
+    case "gemini":
       return {
-        type: 'gemini',
+        type: "gemini",
         model: options.model,
         apiKey: options.apiKey,
         thinking: options.thinking,
       };
-    case 'ollama':
+    case "ollama":
       return {
-        type: 'ollama',
+        type: "ollama",
         model: options.model,
         baseUrl: options.ollamaBaseUrl,
       };
-    case 'openai':
+    case "openai":
       return {
-        type: 'openai',
+        type: "openai",
         model: options.model,
         apiKey: options.apiKey,
         baseURL: options.baseUrl,
       };
-    case 'groq':
+    case "groq":
       return {
-        type: 'openai',
+        type: "openai",
         model: options.model,
         apiKey: options.apiKey,
         baseURL: GROQ_BASE_URL,
       };
     default:
       return {
-        type: 'bedrock',
+        type: "bedrock",
         model: options.model,
         region: options.region,
         guardrail: options.guardrail,
@@ -99,7 +100,9 @@ function toProviderOptions(options: DomainRunnerOptions): CliProviderOptions {
 }
 
 function loadPayload(payloadOption: string): unknown {
-  const source = existsSync(payloadOption) ? readFileSync(payloadOption, 'utf-8') : payloadOption;
+  const source = existsSync(payloadOption)
+    ? readFileSync(payloadOption, "utf-8")
+    : payloadOption;
   return JSON.parse(source);
 }
 
@@ -126,25 +129,28 @@ export async function runDomain(options: DomainRunnerOptions): Promise<void> {
     enableTimings: Boolean(options.timings),
   });
 
-  const engine = new RuntimeEngine(new FileStoreKnowledgeAdapter(fileStore), inference);
+  const engine = new RuntimeEngine(
+    new FileStoreKnowledgeAdapter(fileStore),
+    inference,
+  );
   const result = await engine.execute(task, payload, context);
 
   consoleWriter.log(JSON.stringify(result, null, 2));
 
   if (options.explain && Object.keys(context.explanations).length > 0) {
-    consoleWriter.log('\n## Explanations\n');
+    consoleWriter.log("\n## Explanations\n");
     for (const [step, explanation] of Object.entries(context.explanations)) {
       consoleWriter.log(`**${step}**: ${explanation}`);
     }
   }
 
   if (options.audit && context.auditLog) {
-    consoleWriter.log('\n## Audit Log\n');
+    consoleWriter.log("\n## Audit Log\n");
     consoleWriter.log(stringifyYaml(context.auditLog));
   }
 
   if (options.timings && context.timings) {
-    consoleWriter.log('\n## Timings\n');
+    consoleWriter.log("\n## Timings\n");
     consoleWriter.log(stringifyYaml(context.timings));
   }
 }
