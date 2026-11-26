@@ -8,7 +8,7 @@
   "license": "Apache-2.0",
   "engines": { "node": ">=24" },
   "bin": {
-    "runner": "./bin/runner"
+    "runner": "./dist/cli/index.js"
   },
   "scripts": {
     "precompile": "npm run lint:fix",
