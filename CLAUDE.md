@@ -23,7 +23,7 @@ runner --knowledge-root <path> --payload <jsonOrPath> --provider ollama --model 
 ## Conventions
 
 - `consoleWriter` from `@commonkads/engine` for all CLI output (`no-console` is enforced)
-- Integration tests live in `src/**/*.test.integration.ts`; run with `npm run test:integration`
+- Integration tests live in `test/integration/**/*.test.integration.ts`; run with `npm run test:integration`
 
 ## Coding Standards
 
