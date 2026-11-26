@@ -1,0 +1,3 @@
+description: "No expected output — passes as long as execution succeeds"
+input:
+  value: 1

@@ -1,0 +1,14 @@
+name: Fixture Domain
+task: assessment
+psm: assessment-with-abstraction
+input:
+  type: object
+  required: [value]
+  properties:
+    value:
+      type: number
+knowledge:
+  ontologyPath: ontology.yml
+  normsPath: norms.yml
+  abstractionPath: abstraction.md
+  evaluationPath: evaluation.md

@@ -1,0 +1,5 @@
+description: "Value 42 should pass"
+input:
+  value: 42
+expectedOutput:
+  verdict: Pass
