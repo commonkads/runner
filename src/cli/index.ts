@@ -54,8 +54,7 @@ program
   )
   .option(
     "--model <modelId>",
-    "Model ID for the selected provider",
-    "gemini-2.0-flash-lite",
+    "Model ID for the selected provider (defaults to model in ~/.commonkads/<provider>.yml)",
   )
   .option(
     "--provider <name>",

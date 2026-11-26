@@ -1,12 +1,16 @@
 {
   "name": "@commonkads/runner",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "CLI runner for the CommonKADS engine",
   "type": "module",
   "author": "Rob Proper",
   "license": "Apache-2.0",
-  "engines": { "node": ">=24" },
-  "files": ["dist"],
+  "engines": {
+    "node": ">=24"
+  },
+  "files": [
+    "dist"
+  ],
   "bin": {
     "runner": "./dist/cli/index.js"
   },
@@ -24,12 +28,12 @@
     "test:integration": "node --no-warnings --import tsx/esm --test $(find test -name '*.test.integration.ts' | sort)"
   },
   "dependencies": {
-    "@commonkads/engine": "^0.1.0",
-    "@commonkads/provider-anthropic": "^0.1.0",
-    "@commonkads/provider-aws": "^0.1.0",
-    "@commonkads/provider-google": "^0.1.0",
-    "@commonkads/provider-ollama": "^0.1.0",
-    "@commonkads/provider-openai": "^0.1.0",
+    "@commonkads/engine": "^0.2.0",
+    "@commonkads/provider-anthropic": "^0.2.0",
+    "@commonkads/provider-aws": "^0.2.0",
+    "@commonkads/provider-google": "^0.2.0",
+    "@commonkads/provider-ollama": "^0.2.0",
+    "@commonkads/provider-openai": "^0.2.0",
     "commander": "^14.0.3",
     "yaml": "^2.9.1"
   },
