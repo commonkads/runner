@@ -18,7 +18,7 @@
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "postlint": "npm run format",
     "start": "node --no-warnings --import tsx/esm src/cli/index.ts",
-    "test:integration": "node --no-warnings --import tsx/esm --test $(find src -name '*.test.integration.ts' | sort)"
+    "test:integration": "node --no-warnings --import tsx/esm --test $(find test -name '*.test.integration.ts' | sort)"
   },
   "dependencies": {
     "@commonkads/engine": "*",
