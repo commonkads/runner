@@ -36,7 +36,7 @@ type CliProviderOptions =
 export interface DomainRunnerOptions {
   knowledgeRoot: string;
   payload: string;
-  model: string;
+  model?: string;
   provider?: CliProvider;
   guardrail?: string;
   region?: string;

@@ -1,40 +1,28 @@
-import { readFileSync } from 'node:fs';
-import { homedir } from 'node:os';
-import { join } from 'node:path';
-import { describe, it } from 'node:test';
+import { describe, it } from "node:test";
 
 import {
   HEALTHY_ADULT_PAYLOAD,
   VITAL_SIGNS_ROOT,
   assertVerdictPass,
+  hasProviderCredentials,
   runCli,
-} from './support/runner.js';
+} from "./support/runner.js";
 
-function resolveApiKey(): string | undefined {
-  if (process.env.OPENAI_API_KEY) return process.env.OPENAI_API_KEY;
-  try {
-    return readFileSync(join(homedir(), '.openai'), 'utf-8').trim();
-  } catch {
-    return undefined;
-  }
-}
+const describeIntegration = hasProviderCredentials("openai", "OPENAI_API_KEY")
+  ? describe
+  : describe.skip;
 
-const apiKey = resolveApiKey();
-const describeIntegration = apiKey ? describe : describe.skip;
-
-describeIntegration('Vital signs assessment — OpenAI integration', () => {
-  it('passes a healthy adult reading', { timeout: 60000 }, async () => {
+describeIntegration("Vital signs assessment — OpenAI integration", () => {
+  it("passes a healthy adult reading", { timeout: 60000 }, async () => {
     const { stdout, stderr, code } = await runCli([
-      '--knowledge-root',
+      "--knowledge-root",
       VITAL_SIGNS_ROOT,
-      '--payload',
+      "--payload",
       HEALTHY_ADULT_PAYLOAD,
-      '--provider',
-      'openai',
-      '--model',
-      'gpt-4o-mini',
-      '--api-key',
-      apiKey!,
+      "--provider",
+      "openai",
+      "--model",
+      "gpt-4o-mini",
     ]);
 
     assertVerdictPass(stdout, stderr, code);
