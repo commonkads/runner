@@ -27,7 +27,7 @@ describe('runTests', () => {
   let domainWithoutTestsRoot: string;
 
   before(async () => {
-    domainWithoutTestsRoot = await mkdtemp(join(tmpdir(), 'strata-test-runner-'));
+    domainWithoutTestsRoot = await mkdtemp(join(tmpdir(), 'runner-test-runner-'));
     await cp(SIMPLE_DOMAIN_ROOT, domainWithoutTestsRoot, { recursive: true });
     await rm(join(domainWithoutTestsRoot, 'tests'), { recursive: true });
   });

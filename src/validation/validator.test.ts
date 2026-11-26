@@ -13,7 +13,7 @@ describe('validate', () => {
   let emptyDir: string;
 
   before(async () => {
-    emptyDir = await mkdtemp(join(tmpdir(), 'strata-validator-empty-'));
+    emptyDir = await mkdtemp(join(tmpdir(), 'runner-validator-empty-'));
   });
 
   after(async () => {

@@ -13,7 +13,7 @@ describe('LocalWritableStore', () => {
   let store: LocalWritableStore;
 
   before(async () => {
-    rootDir = await mkdtemp(join(tmpdir(), 'strata-writable-store-'));
+    rootDir = await mkdtemp(join(tmpdir(), 'runner-writable-store-'));
     store = new LocalWritableStore(rootDir);
   });
 
