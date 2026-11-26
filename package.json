@@ -24,12 +24,12 @@
     "test:integration": "node --no-warnings --import tsx/esm --test $(find test -name '*.test.integration.ts' | sort)"
   },
   "dependencies": {
-    "@commonkads/engine": "*",
-    "@commonkads/provider-anthropic": "*",
-    "@commonkads/provider-aws": "*",
-    "@commonkads/provider-google": "*",
-    "@commonkads/provider-ollama": "*",
-    "@commonkads/provider-openai": "*",
+    "@commonkads/engine": "^0.1.0",
+    "@commonkads/provider-anthropic": "^0.1.0",
+    "@commonkads/provider-aws": "^0.1.0",
+    "@commonkads/provider-google": "^0.1.0",
+    "@commonkads/provider-ollama": "^0.1.0",
+    "@commonkads/provider-openai": "^0.1.0",
     "commander": "^14.0.3",
     "yaml": "^2.9.1"
   },
