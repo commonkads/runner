@@ -4,29 +4,26 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-Knowledge authoring and test-runner tools for CommonKADS domains — validation, test case
-execution against live LLM providers, and a `runner` binary. Full purpose: `README.md`.
+CLI runner for the CommonKADS engine — a `runner` binary that runs a PSM-driven knowledge task
+against a live LLM provider. Full purpose: `README.md`.
 
 ## Architecture
 
-- `src/interfaces/` — `IWritableStore` (extends `IFileStore` with write/delete)
-- `src/types/` — `ValidationFinding`, `ValidationResult`, `TestCase`, `TestCaseResult`
-- `src/store/` — `LocalWritableStore` (extends `LocalFileStore`)
-- `src/validation/` — `validate(knowledgeRoot)` — checks `domain.yml` fields and knowledge file paths
-- `src/testing/` — `runTests({ knowledgeRoot, engine })` — loads `tests/*.yml`, runs each via `RuntimeEngine.execute`, compares against `expectedOutput`
-- `src/cli/` — `runner` binary; `validate` and `test` subcommands
+- `src/domain-runner.ts` — `runDomain(options)` — wires up provider, file store, engine, and
+  runs `RuntimeEngine.execute`; prints result as JSON plus optional explain/audit/timings output
+- `src/cli/index.ts` — `runner` binary; registers all providers, defines the CLI flags, calls
+  `runDomain`
 
 ## CLI binary
 
 ```sh
-runner validate --knowledge-root <path>
-runner test --knowledge-root <path> --provider ollama --model llama3
+runner --knowledge-root <path> --payload <jsonOrPath> --provider ollama --model llama3
 ```
 
 ## Conventions
 
 - `consoleWriter` from `@commonkads/engine` for all CLI output (`no-console` is enforced)
-- Test cases are YAML files in `<knowledge-root>/tests/*.yml`; `expectedOutput` is a partial match (only specified keys are compared)
+- Integration tests live in `src/**/*.test.integration.ts`; run with `npm run test:integration`
 
 ## Coding Standards
 

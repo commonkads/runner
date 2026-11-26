@@ -1,24 +1,12 @@
 {
   "name": "@commonkads/runner",
   "version": "0.1.0",
-  "description": "Knowledge authoring and test-runner tools for CommonKADS domains",
+  "private": true,
+  "description": "CLI runner for the CommonKADS engine",
   "type": "module",
   "author": "Rob Proper",
   "license": "Apache-2.0",
-  "engines": {
-    "node": ">=24"
-  },
-  "files": [
-    "dist"
-  ],
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
-  },
+  "engines": { "node": ">=24" },
   "bin": {
     "runner": "./dist/cli/index.js"
   },
@@ -29,14 +17,15 @@
     "lint:fix": "npm run lint -- --fix",
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "postlint": "npm run format",
-    "prerepackage": "rm -rf dist",
-    "repackage": "npm audit --audit-level=high && npm run compile && npm run test:ci && npm run package",
-    "package": "npm pack --pack-destination dist/",
-    "test": "node --no-warnings --import tsx/esm --test $(find src -name '*.test.ts' | sort)",
-    "test:ci": "node --no-warnings --import tsx/esm --test-reporter spec --test-reporter-destination stdout --test-reporter junit --test-reporter-destination test-results.xml --test $(find src -name '*.test.ts' | sort)"
+    "test:integration": "node --no-warnings --import tsx/esm --test $(find src -name '*.test.integration.ts' | sort)"
   },
   "dependencies": {
     "@commonkads/engine": "*",
+    "@commonkads/provider-anthropic": "*",
+    "@commonkads/provider-aws": "*",
+    "@commonkads/provider-google": "*",
+    "@commonkads/provider-ollama": "*",
+    "@commonkads/provider-openai": "*",
     "commander": "^14.0.3",
     "yaml": "^2.9.1"
   },
@@ -54,9 +43,6 @@
     "tsx": "^4.23.15",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.0.0"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
   },
   "allowScripts": {
     "@commonkads/dev-workflow": true
