@@ -1,6 +1,6 @@
 {
   "name": "@commonkads/runner",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "CLI runner for the CommonKADS engine",
   "type": "module",
   "author": "Rob Proper",
