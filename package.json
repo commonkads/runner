@@ -29,11 +29,11 @@
   },
   "dependencies": {
     "@commonkads/engine": "^0.4.0",
-    "@commonkads/provider-anthropic": "^0.2.0",
-    "@commonkads/provider-aws": "^0.2.0",
-    "@commonkads/provider-google": "^0.2.0",
-    "@commonkads/provider-ollama": "^0.2.0",
-    "@commonkads/provider-openai": "^0.2.0",
+    "@commonkads/provider-anthropic": "^0.3.0",
+    "@commonkads/provider-aws": "^0.3.0",
+    "@commonkads/provider-google": "^0.3.0",
+    "@commonkads/provider-ollama": "^0.3.0",
+    "@commonkads/provider-openai": "^0.3.0",
     "commander": "^14.0.3",
     "yaml": "^2.9.1"
   },
