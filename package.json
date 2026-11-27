@@ -28,7 +28,7 @@
     "test:integration": "node --no-warnings --import tsx/esm --test $(find test -name '*.test.integration.ts' | sort)"
   },
   "dependencies": {
-    "@commonkads/engine": "^0.2.0",
+    "@commonkads/engine": "^0.4.0",
     "@commonkads/provider-anthropic": "^0.2.0",
     "@commonkads/provider-aws": "^0.2.0",
     "@commonkads/provider-google": "^0.2.0",
