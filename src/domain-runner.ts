@@ -5,7 +5,6 @@ import { stringify as stringifyYaml } from "yaml";
 import {
   LocalFileStore,
   RuntimeContext,
-  FileStoreKnowledgeAdapter,
   RuntimeEngine,
   consoleWriter,
   LevelFilterLogger,
@@ -13,6 +12,7 @@ import {
   buildInference,
   loadDomainManifest,
   loadTaskFromManifest,
+  type ICatalog,
   type LogLevel,
 } from "@commonkads/engine";
 import type { BedrockProviderOptions } from "@commonkads/provider-aws";
@@ -118,21 +118,26 @@ export async function runDomain(options: DomainRunnerOptions): Promise<void> {
   const fileStore = new LocalFileStore(options.knowledgeRoot);
   const inference = buildInference(toProviderOptions(options));
 
+  // Single-domain shim: wraps the file store as ICatalog until the runner
+  // gains catalog.yml support (see engine #19).
+  const catalog: ICatalog = {
+    getTask: async (_id: string) => task,
+    getModel: (id: string) => fileStore.readWithVersion(id),
+  };
+
   const logger = options.logLevel
     ? new LevelFilterLogger(new StreamLogger(), options.logLevel)
     : undefined;
 
   const context = new RuntimeContext({
+    catalog,
     logger,
     explain: Boolean(options.explain),
     enableAuditLog: Boolean(options.audit),
     enableTimings: Boolean(options.timings),
   });
 
-  const engine = new RuntimeEngine(
-    new FileStoreKnowledgeAdapter(fileStore),
-    inference,
-  );
+  const engine = new RuntimeEngine(inference);
   const result = await engine.execute(task, payload, context);
 
   consoleWriter.log(JSON.stringify(result, null, 2));
